@@ -1,0 +1,26 @@
+# Environnement virtuel
+venv/
+group2/
+
+# Données (gérées par DVC)
+data/raw/
+data/processed/
+models/
+
+# Paramètres avec secrets
+params.yaml
+
+# Python
+__pycache__/
+*.pyc
+
+# MLflow local
+mlruns/
+mlflow.db
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store

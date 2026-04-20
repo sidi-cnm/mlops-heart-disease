@@ -1,0 +1,14 @@
+md5: f3af839fa8df1a0acc1d7a72f7af9420
+frozen: true
+deps:
+- md5: d7c183990830d69272a4ff334c23c9b3.dir
+  size: 11021
+  nfiles: 1
+  hash: md5
+  path: s3://mlops-heart-disease-groupe-2/data/raw/
+outs:
+- md5: 3984728f9249d68edd6aef51bb171eaf.dir
+  size: 11021
+  nfiles: 1
+  hash: md5
+  path: raw
