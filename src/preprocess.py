@@ -1,6 +1,5 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 import yaml
 import os
 
@@ -14,18 +13,33 @@ def preprocess():
 
     # Charger les données
     df = pd.read_csv(preprocess_params["data"])
+    print(f"Dataset chargé : {df.shape[0]} lignes, {df.shape[1]} colonnes")
+
+    # Vérifier les valeurs manquantes
+    missing = df.isnull().sum().sum()
+    if missing > 0:
+        print(f"Valeurs manquantes détectées : {missing}. Suppression des lignes concernées.")
+        df = df.dropna()
+    else:
+        print("Aucune valeur manquante détectée")
+
+    # Vérifier les doublons
+    duplicates = df.duplicated().sum()
+    if duplicates > 0:
+        print(f"Doublons détectés : {duplicates}. Suppression des doublons.")
+        df = df.drop_duplicates()
+    else:
+        print("Aucun doublon détecté")
 
     # Séparer features et target
     X = df.drop("target", axis=1)
     y = df["target"]
 
-    # Normaliser
-    scaler = StandardScaler()
-    X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
+    print(f"Distribution du target : {dict(y.value_counts())}")
 
-    # Split train/test
+    # Split train/test (sans normalisation - RandomForest n'en a pas besoin)
     X_train, X_test, y_train, y_test = train_test_split(
-        X_scaled, y,
+        X, y,
         test_size=preprocess_params["test_size"],
         random_state=preprocess_params["random_state"]
     )
@@ -39,6 +53,7 @@ def preprocess():
     y_test.to_csv(f"{output_dir}/y_test.csv", index=False)
 
     print(f"Preprocessing terminé : {len(X_train)} train, {len(X_test)} test")
+    print(f"Fichiers sauvegardés dans {output_dir}/")
 
 if __name__ == "__main__":
     preprocess()
