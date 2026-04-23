@@ -70,8 +70,15 @@ def predict(data: dict):
     if model is None:
         return {"error": "Model not loaded"}
     
-    # Convertir toutes les valeurs en float
-    data = {key: float(value) for key, value in data.items()}
+    # Convert integer columns to int, keep oldpeak as float
+    int_columns = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "slope", "ca", "thal"]
+    
+    for col in int_columns:
+        if col in data:
+            data[col] = int(float(data[col]))
+    
+    if "oldpeak" in data:
+        data["oldpeak"] = float(data["oldpeak"])
     
     df = pd.DataFrame([data])
     prediction = model.predict(df)
@@ -80,4 +87,4 @@ def predict(data: dict):
     return {
         "prediction": int(prediction[0]),
         "message": result
-    }   
+    }
