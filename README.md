@@ -175,3 +175,13 @@ Déclenché manuellement ou sur modification des données. Relance `dvc repro`, 
 ## Encadrant
 
 Professeur Yehdhih ANNA — Institut Supérieur du Numérique (SupNum)
+
+
+
+
+
+
+
+
+
+
