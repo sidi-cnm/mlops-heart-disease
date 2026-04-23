@@ -63,6 +63,8 @@ def health():
 
 
 
+
+ 
 @app.post("/predict")
 def predict(data: dict):
     if model is None:
@@ -78,4 +80,4 @@ def predict(data: dict):
     return {
         "prediction": int(prediction[0]),
         "message": result
-    }
+    }   
