@@ -3,118 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Disease Prediction</title>
+    <title>Prédiction de Maladie Cardiaque | IA Médicale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f0f2f5; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 600px; width: 100%; }
-        h1 { text-align: center; color: #333; margin-bottom: 30px; font-size: 24px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #555; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
-        input:focus, select:focus { outline: none; border-color: #4a90d9; }
-        button { width: 100%; padding: 12px; background: #4a90d9; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 20px; }
-        button:hover { background: #357abd; }
-        .result { margin-top: 20px; padding: 15px; border-radius: 6px; text-align: center; font-size: 18px; font-weight: bold; display: none; }
-        .positive { background: #ffe0e0; color: #d32f2f; }
-        .negative { background: #e0f7e0; color: #2e7d32; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        :root {
+            --primary: #0ea5e9;
+            --primary-hover: #0284c7;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --danger-color: #ef4444;
+            --danger-bg: #fee2e2;
+            --success-color: #10b981;
+            --success-bg: #d1fae5;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif; 
+        }
+
+        body { 
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 40px 20px; 
+            color: var(--text-main);
+        }
+
+        .container { 
+            background: var(--card-bg); 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            max-width: 800px; 
+            width: 100%; 
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 { 
+            color: var(--text-main); 
+            font-size: 28px; 
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .header i {
+            color: var(--danger-color);
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        /* Regroupement des champs (Fieldsets) */
+        .form-section {
+            margin-bottom: 30px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-section h2 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .form-group { 
+            display: flex;
+            flex-direction: column;
+        }
+
+        label { 
+            margin-bottom: 8px; 
+            color: var(--text-main); 
+            font-weight: 500; 
+            font-size: 13px; 
+        }
+
+        input, select { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-size: 14px; 
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        button { 
+            width: 100%; 
+            padding: 16px; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            font-weight: 600;
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: background 0.3s, transform 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button:hover { 
+            background: var(--primary-hover); 
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result { 
+            margin-top: 30px; 
+            padding: 20px; 
+            border-radius: 12px; 
+            text-align: center; 
+            font-size: 18px; 
+            font-weight: 600; 
+            display: none; 
+            animation: slideUp 0.4s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .positive { 
+            background: var(--danger-bg); 
+            color: var(--danger-color); 
+            border: 1px solid #fecaca;
+        }
+
+        .negative { 
+            background: var(--success-bg); 
+            color: var(--success-color); 
+            border: 1px solid #a7f3d0;
+        }
+
+        .error-msg {
+            background: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Spinner animation */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Prédiction de Maladie Cardiaque</h1>
-        <div class="grid">
-            <div class="form-group">
-                <label>Âge</label>
-                <input type="number" id="age" placeholder="Ex: 55" value="55">
-            </div>
-            <div class="form-group">
-                <label>Sexe</label>
-                <select id="sex">
-                    <option value="1">Homme</option>
-                    <option value="0">Femme</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Type de douleur thoracique (cp)</label>
-                <select id="cp">
-                    <option value="0">Angine typique</option>
-                    <option value="1">Angine atypique</option>
-                    <option value="2">Douleur non-angineuse</option>
-                    <option value="3">Asymptomatique</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Tension artérielle (trestbps)</label>
-                <input type="number" id="trestbps" placeholder="Ex: 130" value="130">
-            </div>
-            <div class="form-group">
-                <label>Cholestérol (chol)</label>
-                <input type="number" id="chol" placeholder="Ex: 250" value="250">
-            </div>
-            <div class="form-group">
-                <label>Glycémie > 120 mg/dl (fbs)</label>
-                <select id="fbs">
-                    <option value="0">Non</option>
-                    <option value="1">Oui</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Résultats ECG (restecg)</label>
-                <select id="restecg">
-                    <option value="0">Normal</option>
-                    <option value="1">Anomalie ST-T</option>
-                    <option value="2">Hypertrophie</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Fréquence cardiaque max (thalach)</label>
-                <input type="number" id="thalach" placeholder="Ex: 150" value="150">
-            </div>
-            <div class="form-group">
-                <label>Angine à l'effort (exang)</label>
-                <select id="exang">
-                    <option value="0">Non</option>
-                    <option value="1">Oui</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Dépression ST (oldpeak)</label>
-                <input type="number" step="0.1" id="oldpeak" placeholder="Ex: 1.5" value="1.5">
-            </div>
-            <div class="form-group">
-                <label>Pente ST (slope)</label>
-                <select id="slope">
-                    <option value="0">Montante</option>
-                    <option value="1">Plate</option>
-                    <option value="2">Descendante</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Vaisseaux colorés (ca)</label>
-                <select id="ca">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Thalassémie (thal)</label>
-                <select id="thal">
-                    <option value="1">Normal</option>
-                    <option value="2">Défaut fixe</option>
-                    <option value="3">Défaut réversible</option>
-                </select>
+        <div class="header">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h1>Diagnostic Prédictif Cardiaque</h1>
+            <p>Veuillez remplir les informations cliniques ci-dessous pour obtenir une prédiction basée sur l'IA.</p>
+        </div>
+        
+        <div class="form-section">
+            <h2><i class="fa-regular fa-user"></i> Profil du Patient</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label>Âge</label>
+                    <input type="number" id="age" placeholder="Ex: 55" value="55">
+                </div>
+                <div class="form-group">
+                    <label>Sexe</label>
+                    <select id="sex">
+                        <option value="1">Homme</option>
+                        <option value="0">Femme</option>
+                    </select>
+                </div>
             </div>
         </div>
-        <button onclick="predict()">Prédire</button>
-        <div class="result" id="result"></div>
+
+        <div class="form-section">
+            <h2><i class="fa-solid fa-stethoscope"></i> Constantes & Symptômes</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label>Type de douleur thoracique (cp)</label>
+                    <select id="cp">
+                        <option value="0">Angine typique</option>
+                        <option value="1">Angine atypique</option>
+                        <option value="2">Douleur non-angineuse</option>
+                        <option value="3">Asymptomatique</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tension artérielle (trestbps)</label>
+                    <input type="number" id="trestbps" placeholder="Ex: 130 mmHg" value="130">
+                </div>
+                <div class="form-group">
+                    <label>Cholestérol (chol)</label>
+                    <input type="number" id="chol" placeholder="Ex: 250 mg/dl" value="250">
+                </div>
+                <div class="form-group">
+                    <label>Glycémie à jeun > 120 mg/dl (fbs)</label>
+                    <select id="fbs">
+                        <option value="0">Non</option>
+                        <option value="1">Oui</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2><i class="fa-solid fa-file-medical-alt"></i> Résultats d'Examens (ECG, Effort...)</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label>Résultats ECG au repos (restecg)</label>
+                    <select id="restecg">
+                        <option value="0">Normal</option>
+                        <option value="1">Anomalie ST-T</option>
+                        <option value="2">Hypertrophie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fréquence cardiaque max (thalach)</label>
+                    <input type="number" id="thalach" placeholder="Ex: 150 bpm" value="150">
+                </div>
+                <div class="form-group">
+                    <label>Angine induite par l'effort (exang)</label>
+                    <select id="exang">
+                        <option value="0">Non</option>
+                        <option value="1">Oui</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Dépression ST induite (oldpeak)</label>
+                    <input type="number" step="0.1" id="oldpeak" placeholder="Ex: 1.5" value="1.5">
+                </div>
+                <div class="form-group">
+                    <label>Pente du segment ST (slope)</label>
+                    <select id="slope">
+                        <option value="0">Montante</option>
+                        <option value="1">Plate</option>
+                        <option value="2">Descendante</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Vaisseaux majeurs colorés (ca)</label>
+                    <select id="ca">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Thalassémie (thal)</label>
+                    <select id="thal">
+                        <option value="1">Normal</option>
+                        <option value="2">Défaut fixe</option>
+                        <option value="3">Défaut réversible</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button id="submitBtn" onclick="predict()">
+            <span id="btnText">Lancer l'Analyse Prédictive</span>
+            <div class="spinner" id="spinner"></div>
+        </button>
+        
+        <div class="result" id="result" style="display: none;"></div>
     </div>
 
     <script>
         async function predict() {
+            const btn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('spinner');
+            const resultDiv = document.getElementById('result');
+
+            // Collecte des données
             const data = {
                 age: parseFloat(document.getElementById('age').value),
                 sex: parseFloat(document.getElementById('sex').value),
@@ -131,25 +352,46 @@
                 thal: parseFloat(document.getElementById('thal').value)
             };
 
+            // État de chargement (Loading state)
+            btn.disabled = true;
+            btnText.textContent = "Analyse en cours...";
+            spinner.style.display = "block";
+            resultDiv.style.display = "none";
+
             try {
                 const response = await fetch('/predict', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-                const result = await response.json();
-                const resultDiv = document.getElementById('result');
-                resultDiv.style.display = 'block';
                 
-                if (result.prediction === 1) {
-                    resultDiv.className = 'result positive';
-                    resultDiv.textContent = 'Maladie cardiaque détectée';
-                } else {
-                    resultDiv.className = 'result negative';
-                    resultDiv.textContent = 'Pas de maladie cardiaque';
-                }
+                if (!response.ok) throw new Error("Erreur serveur");
+                
+                const result = await response.json();
+                
+                // Affichage du résultat avec un léger délai pour simuler le traitement si c'est très rapide
+                setTimeout(() => {
+                    resultDiv.style.display = 'flex';
+                    if (result.prediction === 1) {
+                        resultDiv.className = 'result positive';
+                        resultDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Risque de maladie cardiaque détecté. Consultez un médecin.';
+                    } else {
+                        resultDiv.className = 'result negative';
+                        resultDiv.innerHTML = '<i class="fa-solid fa-check-circle"></i> Aucun risque majeur détecté selon les données fournies.';
+                    }
+                }, 500);
+
             } catch (error) {
-                alert('Erreur de connexion à l\'API');
+                resultDiv.style.display = 'flex';
+                resultDiv.className = 'result error-msg';
+                resultDiv.innerHTML = '<i class="fa-solid fa-plug-circle-xmark"></i> Erreur de connexion à l\'API. Vérifiez que le serveur fonctionne.';
+            } finally {
+                // Restauration du bouton
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btnText.textContent = "Lancer l'Analyse Prédictive";
+                    spinner.style.display = "none";
+                }, 500);
             }
         }
     </script>
