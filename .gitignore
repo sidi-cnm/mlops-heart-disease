@@ -24,3 +24,5 @@ mlflow.db
 
 # OS
 .DS_Store
+Secrutekey.pem
+dvc.params
