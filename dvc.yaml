@@ -2,25 +2,29 @@ stages:
   preprocess:
     cmd: python src/preprocess.py
     deps:
-    - data/raw/heart.csv
-    - src/preprocess.py
+      - src/preprocess.py
+      - params.yaml
     outs:
-    - data/processed/X_test.csv
-    - data/processed/X_train.csv
-    - data/processed/y_test.csv
-    - data/processed/y_train.csv
+      - data/processed/X_test.csv
+      - data/processed/X_train.csv
+      - data/processed/y_test.csv
+      - data/processed/y_train.csv
+
   train:
     cmd: python src/train.py
     deps:
-    - data/processed/X_train.csv
-    - data/processed/y_train.csv
-    - src/train.py
+      - data/processed/X_train.csv
+      - data/processed/y_train.csv
+      - src/train.py
+      - params.yaml
     outs:
-    - models/model.pkl
+      - models/model.pkl
+
   evaluate:
     cmd: python src/evaluate.py
     deps:
-    - data/processed/X_test.csv
-    - data/processed/y_test.csv
-    - models/model.pkl
-    - src/evaluate.py
+      - data/processed/X_test.csv
+      - data/processed/y_test.csv
+      - models/model.pkl
+      - src/evaluate.py
+      - params.yaml

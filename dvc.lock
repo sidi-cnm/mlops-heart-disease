@@ -3,42 +3,46 @@ stages:
   preprocess:
     cmd: python src/preprocess.py
     deps:
-    - path: data/raw/heart.csv
+    - path: params.yaml
       hash: md5
-      md5: 000ca8ef1fb825a072c1ff7b09abb951
-      size: 11021
+      md5: 839a4c87df8c93bef7d73fca2d5c63eb
+      size: 661
     - path: src/preprocess.py
       hash: md5
-      md5: 352b35c898d81a0a7c74614dcc058169
-      size: 1388
+      md5: 940bf17689932981ee9efcb21d618259
+      size: 3185
     outs:
     - path: data/processed/X_test.csv
       hash: md5
-      md5: 14a53defcd91bc1e3bab43969ddbca6c
-      size: 15576
+      md5: dffd52921104e50020424f8ffb8133b5
+      size: 2206
     - path: data/processed/X_train.csv
       hash: md5
-      md5: ac719d104134c8e9a78e19803731acbf
-      size: 61747
+      md5: fa6161eab5d567ade0ab37b904244c18
+      size: 8500
     - path: data/processed/y_test.csv
       hash: md5
       md5: b812380d745a12e2ae77092dcfecb5c7
       size: 129
     - path: data/processed/y_train.csv
       hash: md5
-      md5: 11278676593a0bfb0e78d9297180b25d
-      size: 491
+      md5: 5a5d572a02f6fb3a7916c84a2a7f3df4
+      size: 489
   train:
     cmd: python src/train.py
     deps:
     - path: data/processed/X_train.csv
       hash: md5
-      md5: ac719d104134c8e9a78e19803731acbf
-      size: 61747
+      md5: fa6161eab5d567ade0ab37b904244c18
+      size: 8500
     - path: data/processed/y_train.csv
       hash: md5
-      md5: 11278676593a0bfb0e78d9297180b25d
-      size: 491
+      md5: 5a5d572a02f6fb3a7916c84a2a7f3df4
+      size: 489
+    - path: params.yaml
+      hash: md5
+      md5: 839a4c87df8c93bef7d73fca2d5c63eb
+      size: 661
     - path: src/train.py
       hash: md5
       md5: 61230aaf9f644b5bcf70b92fc49415c0
@@ -46,23 +50,27 @@ stages:
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: d7e6b67dc17416b01f74d6ab57ce382f
-      size: 706839
+      md5: 7dd80174274df5abf2af86a6a3c2b2b4
+      size: 710519
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: data/processed/X_test.csv
       hash: md5
-      md5: 14a53defcd91bc1e3bab43969ddbca6c
-      size: 15576
+      md5: dffd52921104e50020424f8ffb8133b5
+      size: 2206
     - path: data/processed/y_test.csv
       hash: md5
       md5: b812380d745a12e2ae77092dcfecb5c7
       size: 129
     - path: models/model.pkl
       hash: md5
-      md5: d7e6b67dc17416b01f74d6ab57ce382f
-      size: 706839
+      md5: 7dd80174274df5abf2af86a6a3c2b2b4
+      size: 710519
+    - path: params.yaml
+      hash: md5
+      md5: 839a4c87df8c93bef7d73fca2d5c63eb
+      size: 661
     - path: src/evaluate.py
       hash: md5
       md5: 87320e6bf34ab57a807dbf2a89f5dd69
