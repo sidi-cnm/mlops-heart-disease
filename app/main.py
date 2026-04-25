@@ -72,6 +72,7 @@ def predict(data: dict):
     
     # Convert integer columns to int, keep oldpeak as float
     int_columns = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "slope", "ca", "thal"]
+    print("test the pipline ci/cd")
     
     for col in int_columns:
         if col in data:
